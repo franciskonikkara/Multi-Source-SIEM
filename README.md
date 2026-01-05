@@ -22,6 +22,7 @@ Build detections and alerts with SOC-ready logic
 Map logging and monitoring to SOC 2 & ISO/IEC 27001 controls
 
 ### Architecture Overview
+
 Linux Endpoint
  ├── /var/log/auth.log
  ├── auditd events
