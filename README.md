@@ -41,3 +41,40 @@ Splunk (Secondary SIEM View)
 Cloud Logs
  ├── AWS CloudTrail + VPC Flow Logs
  └── Azure Activity Logs
+
+## 📝 Overview
+
+This project is a high-fidelity Security Information and Event Management (SIEM) laboratory. It replicates an enterprise SOC environment by ingesting telemetry from Linux Endpoints, Simulated EDR (CrowdStrike-style), and Multi-Cloud (AWS/Azure) sources into a dual-SIEM architecture (ELK + Splunk).
+
+The primary goal is to demonstrate Detection Engineering and Data Normalization skills across disparate log formats.
+
+## 🏗️ Architecture
+
+The lab utilizes a "Data Lakehouse" approach:
+
+  Collection: Filebeat and Auditbeat ship system-level events.
+
+  Ingestion & Transformation: Logstash pipelines parse raw JSON/Syslog into Elastic Common Schema (ECS).
+
+  Storage & Analysis: Elasticsearch acts as the primary hot-storage, with Kibana providing the visualization layer.
+
+  Cross-Platform Visibility: Key alerts are forwarded to a Splunk instance to demonstrate multi-vendor SIEM integration.
+
+## 🛠️ Key Features & Detections
+1. Endpoint Threat Hunting
+
+    Auditd Correlation: Monitors for execution of discovery commands (e.g., whoami, netstat) mapped to MITRE ATT&CK T1033.
+
+    Brute Force Detection: Logstash filters identify 5+ failed SSH attempts from the same IP within 60 seconds.
+
+2. Cloud Security (AWS/Azure)
+
+    IAM Anomaly: Detects ConsoleLogin without MFA from CloudTrail logs.
+
+    Azure Activity Logs: Monitors for unauthorized "Resource Group" deletions.
+
+3. EDR Simulation
+
+    The edr-simulation/ suite generates synthetic telemetry mimicking advanced memory-resident attacks (Process Injection, LSASS Dumping).
+
+   
