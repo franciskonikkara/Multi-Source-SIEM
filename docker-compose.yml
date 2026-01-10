@@ -21,6 +21,10 @@ services:
       - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
       # Map the SPECIFIC simulation logs folder
       - ./edr-simulation/logs:/var/log/edr_simulation:rw
+      # If you have other simulations, map them here as well
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./edr-simulation/logs:/usr/share/logstash/edr-simulation/logs
+      - ./cloud-simulation/logs:/usr/share/logstash/cloud-simulation/logs
     environment:
       - LS_JAVA_OPTS=-Xms256m -Xmx256m
     networks:
@@ -39,7 +43,7 @@ services:
       - siem-network
     depends_on:
       - elasticsearch
-      
+
 networks:
   siem-network:
     driver: bridge
