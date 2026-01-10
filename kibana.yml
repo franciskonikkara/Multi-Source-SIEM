@@ -1,0 +1,12 @@
+server.name: kibana
+server.host: "0.0.0.0"
+elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+monitoring.ui.container.elasticsearch.enabled: true
+
+# Required for Alerting
+xpack.security.encryptionKey: "a_random_32_character_string_here_1"
+xpack.reporting.encryptionKey: "a_random_32_character_string_here_2"
+xpack.encryptedSavedObjects.encryptionKey: "a_random_32_character_string_here_3"
+
+# Safety settings for your lab
+xpack.security.enabled: false
