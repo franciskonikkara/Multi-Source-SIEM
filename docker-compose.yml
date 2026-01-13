@@ -17,18 +17,15 @@ services:
     image: docker.elastic.co/logstash/logstash:8.10.2
     container_name: logstash
     volumes:
-      # Map the pipeline config
-      - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
-      # Map the SPECIFIC simulation logs folder
-      - ./edr-simulation/logs:/var/log/edr_simulation:rw
-      # If you have other simulations, map them here as well
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      # Use the new relative path to your config file
+      - ./elk/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      # Keep your log folder mounts
       - ./edr-simulation/logs:/usr/share/logstash/edr-simulation/logs
       - ./cloud-simulation/logs:/usr/share/logstash/cloud-simulation/logs
-    environment:
-      - LS_JAVA_OPTS=-Xms256m -Xmx256m
     networks:
       - siem-network
+    environment:
+      - xpack.monitoring.enabled=false
     depends_on:
       - elasticsearch
 
